@@ -16,7 +16,7 @@ RUN echo "deb http://ftp.debian.org/debian sid main"      > /etc/apt/sources.lis
 
 # --------------------------------------------------------------------- tcnative
 ENV APR_VERSION 1.5.2
-ENV TCNATIVE_VERSION 1.2.10
+ENV TCNATIVE_VERSION 1.2.12
 
 RUN apt-get -qq update \
  && apt-get -qq install -y build-essential libpcre++-dev zlib1g-dev \
