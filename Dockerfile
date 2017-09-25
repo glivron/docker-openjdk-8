@@ -1,25 +1,23 @@
-FROM openjdk:8-jdk
+FROM openjdk:8-jdk-slim
+
+ENV APR_VERSION 1.6.2
+ENV TCNATIVE_VERSION 1.2.14
 
 RUN apt-get -qq update                    \
  && apt-get -qq upgrade -y                \
  && apt-get -qq install -y apt-utils curl \
- && apt-get -qq clean
 
 # ---------------------------------------------------------------------- openssl
-RUN echo "deb http://ftp.debian.org/debian sid main"      > /etc/apt/sources.list.d/sid.list \
+ && echo "deb http://ftp.debian.org/debian sid main"      > /etc/apt/sources.list.d/sid.list \
  && echo "deb-src http://ftp.debian.org/debian sid main" >> /etc/apt/sources.list.d/sid.list \
  && apt-get -qq update                        \
  && apt-get -qq install -y openssl libssl-dev \
- && rm /etc/apt/sources.list.d/sid.list       \
+ && rm /etc/apt/sources.list.d/sid.list        \
  && apt-get -qq update                        \
- && apt-get -qq clean
 
 # --------------------------------------------------------------------- tcnative
-ENV APR_VERSION 1.6.2
-ENV TCNATIVE_VERSION 1.2.14
-
-RUN apt-get -qqq update \
- && apt-get -qqq install -y build-essential libpcre++-dev zlib1g-dev \
+ && apt-get -qq install -y build-essential libpcre++-dev zlib1g-dev \
+ && cd /tmp \
 
  && curl -L https://www.apache.org/dist/apr/apr-$APR_VERSION.tar.gz | gunzip -c | tar x \
  && cd apr-$APR_VERSION \
@@ -33,4 +31,4 @@ RUN apt-get -qqq update \
 
  && apt-get -qq autoremove -y build-essential \
  && apt-get -qq clean \
- && rm -fR /tmp/* /apr-* /tomcat-native-*
+ && rm -fR /tmp/*
