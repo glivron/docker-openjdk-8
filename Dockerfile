@@ -1,7 +1,8 @@
 FROM openjdk:8-jdk-slim
+ENV DEBIAN_FRONTEND noninteractive
 
-ENV APR_VERSION 1.6.2
-ENV TCNATIVE_VERSION 1.2.14
+ENV APR_VERSION 1.6.3
+ENV TCNATIVE_VERSION 1.2.16
 
 RUN apt-get -qq update                    \
  && apt-get -qq upgrade -y                \
@@ -12,7 +13,7 @@ RUN apt-get -qq update                    \
  && echo "deb-src http://ftp.debian.org/debian sid main" >> /etc/apt/sources.list.d/sid.list \
  && apt-get -qq update                        \
  && apt-get -qq install -y openssl libssl-dev \
- && rm /etc/apt/sources.list.d/sid.list        \
+ && rm /etc/apt/sources.list.d/sid.list       \
  && apt-get -qq update                        \
 
 # --------------------------------------------------------------------- tcnative
